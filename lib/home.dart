@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pokemon/models/select_option_model.dart';
 import 'package:pokemon/search_pokemon.dart';
 import 'package:pokemon/select_option.dart';
+import 'package:pokemon/video_PK.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -52,6 +53,12 @@ class _HomeState extends State<Home> {
                   color: Colors.white
                 ),),
               ),
+               SizedBox(
+                 height: 10,
+               ),
+               Container(
+                   height: 300,
+                   child: videoPlayerPK()),
             ],
           ),
         ),

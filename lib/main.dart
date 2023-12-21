@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:pokemon/provider/video_provider.dart';
+import 'package:pokemon/video_PK.dart';
+import 'package:provider/provider.dart';
 
 import 'home.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(providers: [
+     ChangeNotifierProvider(create: (context) => VideoProvider())
+    ],
+    child: const MyApp(),
+    ));
 }
 
 class MyApp extends StatelessWidget {
