@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pokemon/search_pokemon.dart';
 import 'package:pokemon/services/pokemon_api_services.dart';
 
+import 'detailsPK.dart';
 import '../models/pokemon_api_models.dart';
 
 import 'package:shimmer/shimmer.dart';
@@ -104,24 +105,29 @@ class _SelectPokemonState extends State<SelectPokemon> {
                    }else {
                      return Card(
                        color: Colors.white,
-                       child: Column(
-                         mainAxisAlignment: MainAxisAlignment.center,
-                         children: [
-                           Image.network(
-                             '${postDataApi[index].img}',
-                             height: 120,
-                             width: 120,
-                           ),
-                           SizedBox(height: 8),
-                           Text(
-                             '${postDataApi[index].name}',
-                             style: TextStyle(
-                               fontWeight: FontWeight.bold,
-
-                               fontSize: 16,
+                       child: GestureDetector(
+                         onTap: (){
+                           Navigator.push(context, MaterialPageRoute(builder: (context) => DetailsPokemon(postData: postDataApi[index])));
+                         },
+                         child: Column(
+                           mainAxisAlignment: MainAxisAlignment.center,
+                           children: [
+                             Image.network(
+                               '${postDataApi[index].img}',
+                               height: 120,
+                               width: 120,
                              ),
-                           ),
-                         ],
+                             SizedBox(height: 8),
+                             Text(
+                               '${postDataApi[index].name}',
+                               style: TextStyle(
+                                 fontWeight: FontWeight.bold,
+
+                                 fontSize: 16,
+                               ),
+                             ),
+                           ],
+                         ),
                        ),
                      );
                    }
