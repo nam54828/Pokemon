@@ -4,7 +4,7 @@ import 'package:pokemon/search_pokemon.dart';
 import 'package:pokemon/services/pokemon_api_services.dart';
 
 import 'detailsPK.dart';
-import '../models/pokemon_api_models.dart';
+import '../../models/pokemon_api_models.dart';
 
 import 'package:shimmer/shimmer.dart';
 
