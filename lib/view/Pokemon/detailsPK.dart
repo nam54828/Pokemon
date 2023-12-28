@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pokemon/models/favorite_models.dart';
 import 'package:pokemon/models/pokemon_api_models.dart';
 import 'package:pokemon/view/Cart/add_to_cart.dart';
+import 'package:provider/provider.dart';
 class DetailsPokemon extends StatefulWidget {
   final APIPokemon postData;
   const DetailsPokemon({Key? key, required this.postData}) : super(key: key);
@@ -11,17 +13,6 @@ class DetailsPokemon extends StatefulWidget {
 }
 
 class _DetailsPokemonState extends State<DetailsPokemon> {
-  bool _isPressed = false;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    setState(() {
-      _isPressed = true;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(child: Scaffold(
@@ -34,12 +25,24 @@ class _DetailsPokemonState extends State<DetailsPokemon> {
         ),),
         centerTitle: true,
         actions: [
-          IconButton(onPressed: (){
-            setState(() {
-              _isPressed = true;
-            });
-          },
-              icon: _isPressed ? Icon(Icons.favorite, color: Colors.red,) :  Icon(Icons.favorite_border, color: Colors.white,))
+          Consumer<FavoriteModel>(
+            builder: (context, favoriteModel, child) {
+              bool isFavorite = favoriteModel.isFavorite(widget.postData);
+              return IconButton(
+                onPressed: () {
+                  if (isFavorite) {
+                    favoriteModel.removeFavorite(widget.postData);
+                  } else {
+                    favoriteModel.addFavorite(widget.postData);
+                  }
+                },
+                icon: Icon(
+                  isFavorite ? Icons.favorite : Icons.favorite_border,
+                  color: isFavorite ? Colors.red : Colors.white,
+                ),
+              );
+            },
+          ),
         ],
         leading: IconButton(onPressed: (){
           Navigator.pop(context);

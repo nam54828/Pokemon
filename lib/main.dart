@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:pokemon/provider/video_provider.dart';
 import 'package:pokemon/video_PK.dart';
 import 'package:provider/provider.dart';
-
+import 'models/favorite_models.dart';
 import 'home.dart';
 
 void main() {
   runApp(
     MultiProvider(providers: [
-     ChangeNotifierProvider(create: (context) => VideoProvider())
+     ChangeNotifierProvider(create: (context) => VideoProvider()),
+    ChangeNotifierProvider(create: (context) => FavoriteModel())
     ],
     child: const MyApp(),
     ));
