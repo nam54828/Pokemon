@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pokemon/models/select_option_model.dart';
 import 'package:pokemon/search_pokemon.dart';
 import 'package:pokemon/select_option.dart';
 import 'package:pokemon/video_PK.dart';

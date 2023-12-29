@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokemon/models/cart_models.dart';
 import 'package:pokemon/provider/video_provider.dart';
 import 'package:pokemon/video_PK.dart';
 import 'package:provider/provider.dart';
@@ -9,7 +10,8 @@ void main() {
   runApp(
     MultiProvider(providers: [
      ChangeNotifierProvider(create: (context) => VideoProvider()),
-    ChangeNotifierProvider(create: (context) => FavoriteModel())
+    ChangeNotifierProvider(create: (context) => FavoriteModel()),
+      ChangeNotifierProvider(create: (context) => CartModels()),
     ],
     child: const MyApp(),
     ));

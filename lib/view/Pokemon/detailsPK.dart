@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pokemon/models/cart_models.dart';
 import 'package:pokemon/models/favorite_models.dart';
 import 'package:pokemon/models/pokemon_api_models.dart';
 import 'package:pokemon/view/Cart/add_to_cart.dart';
+import 'package:pokemon/view/Cart/cart_screen.dart';
 import 'package:provider/provider.dart';
 class DetailsPokemon extends StatefulWidget {
   final APIPokemon postData;
@@ -100,29 +102,34 @@ class _DetailsPokemonState extends State<DetailsPokemon> {
               ],
         ),),
       ),
-      bottomNavigationBar: Container(
-        height: 80,
-        child: GestureDetector(
-         onTap: (){
-           Navigator.push(context, MaterialPageRoute(builder: (context) => AddToCart(postData: widget.postData,)));
-         },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("Add To Cart", style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold
-              ),),
-              SizedBox(
-                width: 10,
+      bottomNavigationBar: Consumer<CartModels>(
+          builder: (context, cartModels, child){
+            return GestureDetector(
+              onTap: (){
+                cartModels.addCart(widget.postData);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => CartScreen()));
+              },
+              child: Container(
+                height: 80,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Add To Cart", style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold
+                    ),),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Icon(CupertinoIcons.cart, color: Colors.white,)
+                  ],
+                ),
+                decoration: BoxDecoration(
+                    color: Colors.grey
+                ),
               ),
-              Icon(CupertinoIcons.cart, color: Colors.white,)
-            ],
-          ),
-        ),
-        decoration: BoxDecoration(
-          color: Colors.grey
-        ),
+            );
+          },
       ),
     ));
   }
