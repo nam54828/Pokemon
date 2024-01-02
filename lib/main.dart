@@ -1,12 +1,19 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pokemon/models/cart_models.dart';
 import 'package:pokemon/provider/video_provider.dart';
 import 'package:pokemon/video_PK.dart';
+import 'package:pokemon/view/Register/register.dart';
 import 'package:provider/provider.dart';
+import 'firebase_options.dart';
 import 'models/favorite_models.dart';
 import 'home.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
     MultiProvider(providers: [
      ChangeNotifierProvider(create: (context) => VideoProvider()),
@@ -30,7 +37,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Home(),
+      home: Register(),
     );
   }
 }
