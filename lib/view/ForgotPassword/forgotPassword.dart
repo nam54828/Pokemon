@@ -1,5 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pokemon/view/Login/login.dart';
+import 'package:provider/provider.dart';
 
 class ForgotPassword extends StatelessWidget {
   const ForgotPassword({Key? key}) : super(key: key);
@@ -66,7 +70,17 @@ class ForgotPassword extends StatelessWidget {
             SizedBox(
               height: 15,
             ),
-            ElevatedButton(onPressed: (){}, child: Container(
+            ElevatedButton(onPressed: () async{
+              try {
+                FirebaseAuth.instance.sendPasswordResetEmail(email: _emailController.text).then((value) {
+                  print("Email sent");
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+
+                });
+              }  catch(e){
+                print("Error $e");
+              }
+            }, child: Container(
               height: 50,
               width: double.infinity,
               child: Center(

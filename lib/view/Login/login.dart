@@ -1,16 +1,31 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pokemon/home.dart';
 import 'package:pokemon/view/Register/register.dart';
 
 import '../ForgotPassword/forgotPassword.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
 
   @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
-    final TextEditingController _emailController = TextEditingController();
-    final TextEditingController _passwordController = TextEditingController();
     return Scaffold(
       backgroundColor: Colors.black,
       body: Padding(padding: EdgeInsets.all(12),
@@ -26,6 +41,7 @@ class Login extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Form(
+                  key: _formKey,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,6 +72,9 @@ class Login extends StatelessWidget {
                               prefixIcon:  Icon(Icons.email, color: Colors.cyanAccent,)
                           ),
                           controller: _emailController,
+                          onSaved: (value){
+                            _emailController.text = value!;
+                          },
                         ),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
@@ -108,7 +127,11 @@ class Login extends StatelessWidget {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPassword()));
                   }, child: Text("Forgot Password"))),
               ElevatedButton(onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+                FirebaseAuth.instance.signInWithEmailAndPassword(email: _emailController.text,
+                    password: _passwordController.text).then((value) {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+                });
+
               },
                 child: Container(
                   height: 50,

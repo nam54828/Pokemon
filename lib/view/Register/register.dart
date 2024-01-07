@@ -1,17 +1,36 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../Login/login.dart';
 
-class Register extends StatelessWidget {
+
+class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
 
   @override
+  State<Register> createState() => _RegisterState();
+}
+
+class _RegisterState extends State<Register> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmController = TextEditingController();
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _emailController.dispose();
+    _phoneController.dispose();
+    _passwordController.dispose();
+    _confirmController.dispose();
+    super.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
-    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-    final TextEditingController _emailController = TextEditingController();
-    final TextEditingController _phoneController = TextEditingController();
-    final TextEditingController _passwordController = TextEditingController();
-    final TextEditingController _confirmController = TextEditingController();
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.black,
@@ -67,6 +86,20 @@ class Register extends StatelessWidget {
                                 )
                             ),
                             controller: _emailController,
+                            validator: (value){
+                              if(value!.isEmpty){
+                                return ("Vui lòng nhập email");
+                              }
+                              if (!RegExp(
+                                  "^[a-zA-Z0-9+_.-]+@[a-z0-9A-Z.-]+.[a-z]")
+                                  .hasMatch(value)) {
+                                return ("Vui lòng nhập Email hợp lệ");
+                              }
+                              return null;
+                            },
+                            onSaved: (value){
+                              _emailController.text = value!;
+                            },
                           ),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12),
@@ -106,6 +139,21 @@ class Register extends StatelessWidget {
                                 )
                             ),
                             controller: _phoneController,
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(10),
+                            ],
+                            validator: (value){
+                              RegExp regex = RegExp('[0-9]*');
+                              if (value!.isEmpty || value.length <9){
+                                return ("Please enter your phone number");
+                              }
+                              if (!regex.hasMatch(value)) {
+                                return ("Invalid phone number");
+                              }
+                            },
+                            onSaved: (value){
+                              _phoneController.text = value!;
+                            },
                           ),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12),
@@ -145,6 +193,18 @@ class Register extends StatelessWidget {
                                 )
                             ),
                             controller: _passwordController,
+                            validator: (value){
+                              RegExp regex = RegExp(r'^.{6,}$');
+                              if(value!.isEmpty){
+                                return ("Please re-enter your password");
+                              }
+                              if(!regex.hasMatch(value)){
+                                return ("Invalid Password ");
+                              }
+                            },
+                            onSaved: (value){
+                              _passwordController.text = value!;
+                            },
                             obscureText: true,
                           ),
                           decoration: BoxDecoration(
@@ -200,7 +260,28 @@ class Register extends StatelessWidget {
                 SizedBox(
                   height: 30,
                 ),
-                ElevatedButton(onPressed: (){}, child: Container(
+                ElevatedButton(onPressed: (){
+                  if(_formKey.currentState!.validate()){
+                    if(_passwordController.text != _confirmController.text){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("Password Do Not Match."),
+                            backgroundColor: Colors.red,)
+                      );
+                    } else{
+                      FirebaseAuth.instance.createUserWithEmailAndPassword(email:_emailController.text,
+                          password: _passwordController.text
+                      ).then((value) {
+                        FirebaseDatabase.instance.ref('users').child(value.user!.uid).set({
+                          'email' : _emailController.text,
+                          'phone': _phoneController.text,
+                          'password': _passwordController.text,
+                          'confirmPassword' : _confirmController.text
+                        });
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+                      });
+                    }
+                  }
+                }, child: Container(
                   height: 50,
                   width: double.infinity,
                   child: Center(
