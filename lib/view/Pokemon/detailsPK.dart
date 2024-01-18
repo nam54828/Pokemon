@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:pokemon/models/cart_models.dart';
 import 'package:pokemon/models/favorite_models.dart';
 import 'package:pokemon/models/pokemon_api_models.dart';
-import 'package:pokemon/view/Cart/add_to_cart.dart';
 import 'package:pokemon/view/Cart/cart_screen.dart';
 import 'package:provider/provider.dart';
 class DetailsPokemon extends StatefulWidget {
@@ -80,6 +79,9 @@ class _DetailsPokemonState extends State<DetailsPokemon> {
                        Text("Weight: ", style: TextStyle(
                            fontWeight: FontWeight.bold
                        ),),
+                       Text("Price: ", style: TextStyle(
+                           fontWeight: FontWeight.bold
+                       ),),
                      ],
                    ),
                    SizedBox(
@@ -93,7 +95,8 @@ class _DetailsPokemonState extends State<DetailsPokemon> {
                        Text("${widget.postData.candyCount}"),
                        Text("${widget.postData.egg}"),
                        Text("${widget.postData.type}"),
-                       Text("${widget.postData.weight}")
+                       Text("${widget.postData.weight}"),
+                       Text("${widget.postData.price} Dollar")
                      ],
                    )
                  ],

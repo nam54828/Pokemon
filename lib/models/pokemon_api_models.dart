@@ -9,7 +9,8 @@ class APIPokemon {
   String? candy;
   int? candyCount;
   String? egg;
-
+  int price = 15;
+  int quantity = 1;
   APIPokemon(
       { required this.id,
         this.num,

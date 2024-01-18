@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokemon/provider/search_provider.dart';
 import 'package:pokemon/services/pokemon_api_services.dart';
-import 'package:pokemon/view/Pokemon/detailsPK.dart';
 import 'package:provider/provider.dart';
 
 
@@ -67,28 +66,6 @@ class _SearchState extends State<Search> {
             style: TextStyle(color: Colors.black),
           ),
         ),
-        if (isSearching)
-          Expanded(
-              child: Consumer<SearchProvider>(
-                builder: (context, searchProvider, child) {
-                  return ListView.builder(
-                    itemCount: searchProvider.filteredPokemons.length,
-                    itemBuilder: (context, index) {
-                      var pokemon = searchProvider.filteredPokemons[index];
-                      return ListTile(
-                        title: Text(pokemon.name ?? 'No Name', style: TextStyle(
-                            color: Colors.white
-                        ),),
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => DetailsPokemon(postData: pokemon)));
-                        },
-                      );
-                    },
-                  );
-                },
-              )
-
-          ),
       ],
     );
   }

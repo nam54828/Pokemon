@@ -20,4 +20,5 @@ class CartModels extends ChangeNotifier{
   bool isCart(APIPokemon pokemon){
     return _carts.any((element) => element.id == pokemon.id);
   }
+
 }
