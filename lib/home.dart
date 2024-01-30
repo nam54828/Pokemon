@@ -1,11 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pokemon/provider/search_provider.dart';
+import 'package:pokemon/view/Cart/cart_screen.dart';
+import 'package:pokemon/view/Favorite/favorite_screen.dart';
+import 'package:pokemon/view/Pokemon/select_pokemon.dart';
 import 'package:pokemon/view/Seach/listview_search.dart';
 import 'package:pokemon/view/Seach/search_pokemon.dart';
 import 'package:pokemon/select_option.dart';
 import 'package:pokemon/video_PK.dart';
 import 'package:pokemon/view/Login/login.dart';
+import 'package:pokemon/view/Term/terms.dart';
 import 'package:provider/provider.dart';
 
 
@@ -66,7 +70,7 @@ class _HomeState extends State<Home> {
               title: Text('Pokemon'),
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SelectOption()));
+                    MaterialPageRoute(builder: (context) => SelectPokemon()));
               },
             ),
             ListTile(
@@ -77,7 +81,7 @@ class _HomeState extends State<Home> {
               title: Text('Favorite'),
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SelectOption()));
+                    MaterialPageRoute(builder: (context) => FavoriteScreen()));
               },
             ),
             ListTile(
@@ -85,10 +89,10 @@ class _HomeState extends State<Home> {
                 Icons.shopping_cart,
                 color: Colors.blue,
               ),
-              title: Text('Cart'),
+              title: Text('My Order'),
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SelectOption()));
+                    MaterialPageRoute(builder: (context) => CartScreen()));
               },
             ),
             ListTile(
@@ -99,7 +103,7 @@ class _HomeState extends State<Home> {
               title: Text('Terms'),
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SelectOption()));
+                    MaterialPageRoute(builder: (context) => Terms()));
               },
             ),
             ListTile(

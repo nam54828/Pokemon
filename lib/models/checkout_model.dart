@@ -4,21 +4,21 @@ import 'package:pokemon/models/pokemon_api_models.dart';
 class Checkout extends ChangeNotifier {
   static int calculatorToalPrice(List<APIPokemon> cartItems) {
     int total = 0;
-    for (var item in cartItems){
-      total += item.price * item.quantity;
+    for (var pokemon in cartItems){
+      total += pokemon.price * pokemon.quantity;
     }
     return total;
   }
   List<APIPokemon> carts = [];
-  void increaseItemQuantity(APIPokemon item) {
-    item.quantity++;
+  void increaseItemQuantity(APIPokemon pokemon) {
+    pokemon.quantity++;
     notifyListeners();
   }
 
-  void decreaseItemQuantity(APIPokemon item) {
-    if (item.quantity > 1) {
-      item.quantity--;
-      notifyListeners();
+  void decreaseItemQuantity(APIPokemon pokemon) {
+    if (pokemon.quantity > 1) {
+      pokemon.quantity--;
     }
+    notifyListeners();
   }
 }
