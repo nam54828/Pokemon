@@ -218,6 +218,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 'name': pokemon.name,
                                 'quantity': pokemon.quantity,
                                 'price': pokemon.price,
+                                'img': pokemon.img
                               };
                             }).toList(),
                             'totalPrice': totalPrice,

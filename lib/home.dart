@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pokemon/provider/search_provider.dart';
 import 'package:pokemon/view/Cart/cart_screen.dart';
+import 'package:pokemon/view/Cart/my_order.dart';
 import 'package:pokemon/view/Favorite/favorite_screen.dart';
 import 'package:pokemon/view/Pokemon/select_pokemon.dart';
 import 'package:pokemon/view/Seach/listview_search.dart';
@@ -92,7 +93,7 @@ class _HomeState extends State<Home> {
               title: Text('My Order'),
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => CartScreen()));
+                    MaterialPageRoute(builder: (context) => My_Order()));
               },
             ),
             ListTile(
